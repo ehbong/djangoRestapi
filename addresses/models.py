@@ -1,6 +1,7 @@
 #model.py
 from django.db import models
 
+
 class Addresses(models.Model):
     name = models.CharField(max_length=10)
     phone_number = models.CharField(max_length=13)
@@ -9,3 +10,4 @@ class Addresses(models.Model):
 
     class Meta:
         ordering = ['created']
+        app_label = 'addresses'
