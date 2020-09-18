@@ -21,5 +21,6 @@ urlpatterns = [
     path('addresses/', views.address_list),
     path('addresses/<int:pk>/', views.address),
     path('login/', views.login),
+    url('^$', views.login_page),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
