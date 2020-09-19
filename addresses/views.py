@@ -47,7 +47,11 @@ def address(request, pk):
 def login(request):
     if request.method == 'POST':
         print(request.body)
-        data = JSONParser().parse(request)
+
+        if request.META['CONTENT_TYPE'] == "application/json":  # JSON 으로 받을때
+            data = JSONParser().parse(request)
+        else:  # 폼 액션으로 전송받았을때
+            data = request.POST
         search_name = data['name']
         print(search_name)
         obj = Addresses.objects.get(name=search_name)
@@ -58,5 +62,6 @@ def login(request):
             return HttpResponse(status=400)
 
 
+# application/x-www-form-urlencoded
 def login_page(request):
     return render(request, "addresses/login.html")
