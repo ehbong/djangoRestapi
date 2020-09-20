@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Addresses
 from .serializers import AddressesSerializer
 from rest_framework.parsers import JSONParser
+from django.contrib.auth import authenticate
 
 
 @csrf_exempt
@@ -52,11 +53,11 @@ def login(request):
             data = JSONParser().parse(request)
         else:  # 폼 액션으로 전송받았을때
             data = request.POST
-        search_name = data['name']
-        print(search_name)
-        obj = Addresses.objects.get(name=search_name)
-
-        if data['phone_number'] == obj.phone_number:
+        userId = data['userid']
+        userPw = data['userPw']
+        login_result = authenticate(username=userId, password=userPw)
+        print("userId = "+userId + " result = " + login_result)
+        if login_result:
             return HttpResponse(status=200)
         else:
             return HttpResponse(status=400)
